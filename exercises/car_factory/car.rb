@@ -1,7 +1,14 @@
 class Car
+  AVAILABLE_COLORS = []
+
   def initialize(brand, color: nil)
     @brand = brand
-    @color = color
+    if color.nil?
+      @color = AVAILABLE_COLORS.first
+      AVAILABLE_COLORS.rotate!
+    else
+      @color = color
+    end
   end
 
   def color_name
