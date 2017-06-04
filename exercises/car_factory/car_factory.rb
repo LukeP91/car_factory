@@ -23,4 +23,8 @@ class CarFactory
     brands ||= @brands.first
     Car.new(brands)
   end
+
+  def name
+    "#{@name} (produces #{@brands.first.to_s.capitalize})"
+  end
 end
