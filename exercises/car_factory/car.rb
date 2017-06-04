@@ -14,4 +14,8 @@ class Car
   def color_name
     @color.to_s.split('_').map(&:capitalize).join(' ')
   end
+
+  def brand
+    @brand.to_s.capitalize
+  end
 end
