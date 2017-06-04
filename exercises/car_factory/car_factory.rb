@@ -14,7 +14,8 @@ class CarFactory
     @brands = brands
   end
 
-  def make_car
-    Car.new(@brands)
+  def make_car(brands = nil)
+    brands ||= @brands
+    Car.new(brands)
   end
 end
