@@ -16,7 +16,7 @@ class CarFactory
   end
 
   def make_car(brands = nil)
-    if brands == nil && @brands.size > 1
+    if (brands == nil || !@brands.include?(brands) ) && @brands.size > 1 
       raise UnsupportedBrandException.new, 'Factory does not have a brand or do not support it'
     end
 
