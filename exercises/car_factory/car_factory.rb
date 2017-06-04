@@ -25,6 +25,12 @@ class CarFactory
   end
 
   def name
-    "#{@name} (produces #{@brands.first.to_s.capitalize})"
+    "#{@name} (produces #{brands_names_array.join(', ')})"
+  end
+
+  private
+  
+  def brands_names_array
+    @brands.map(&:to_s).map(&:capitalize)
   end
 end
