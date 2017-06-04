@@ -13,8 +13,8 @@ class CarPark
   def receive(cars)
     cars = [cars]
     cars.flatten!
-    @cars.concat(cars)
+    cars.each do |car|
+      @cars << car if (places_left > 0)
+    end
   end
-
-
 end
