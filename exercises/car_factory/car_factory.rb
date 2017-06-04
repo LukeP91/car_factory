@@ -1,0 +1,2 @@
+class CarFactory
+end
