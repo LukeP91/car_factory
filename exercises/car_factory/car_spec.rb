@@ -17,7 +17,7 @@ RSpec.describe Car do
         it 'toggles available colors for each created instance' do
           # Ensure previous specs do not affect which color is picked first
           Object.send(:remove_const, 'Car')
-          load 'car_factory/car.rb'
+          load 'car.rb'
           stub_const('Car::AVAILABLE_COLORS', %i(black red yellow))
 
           expect(Car.new(:fiat).color_name).to eq 'Black'
