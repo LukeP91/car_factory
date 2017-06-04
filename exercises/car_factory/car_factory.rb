@@ -11,6 +11,10 @@ class CarFactory
     end
 
     @name = name
-    @brads = brands
+    @brands = brands
+  end
+
+  def make_car
+    Car.new(@brands)
   end
 end
