@@ -24,6 +24,14 @@ class CarFactory
     Car.new(brands)
   end
 
+  def make_cars(amount)
+    cars = []
+    amount.times do
+      cars << Car.new(@brands.first)
+    end
+    cars
+  end
+
   def name
     "#{@name} (produces #{brands_names_array.join(', ')})"
   end
