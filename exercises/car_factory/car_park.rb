@@ -6,7 +6,15 @@ class CarPark
     @cars = []
   end
 
-  def receive(cars)
-    @cars << cars
+  def places_left
+    @capacity - @cars.size
   end
+
+  def receive(cars)
+    cars = [cars]
+    cars.flatten!
+    @cars.concat(cars)
+  end
+
+
 end
