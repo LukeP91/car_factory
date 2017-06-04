@@ -5,9 +5,10 @@ class CarFactory
   SUPPORTED_BRANDS = %i{Fiat Lancia Ford Subaru}
 
   def initialize(name, brands: nil)
-    unless SUPPORTED_BRANDS.include?(brands.capitalize)
+    brands = [brands].flatten
+    unless brands.all? { |e| SUPPORTED_BRANDS.include?(e.capitalize) }
       raise UnsupportedBrandException.new,
-            "Brand not supported: '#{brands.to_s.capitalize}'"
+            "Brand not supported: '#{brands.map(&:to_s).map(&:capitalize).join(' ')}'"
     end
 
     @name = name
@@ -15,7 +16,11 @@ class CarFactory
   end
 
   def make_car(brands = nil)
-    brands ||= @brands
+    if brands == nil && @brands.size > 1
+      raise UnsupportedBrandException.new, 'Factory does not have a brand or do not support it'
+    end
+
+    brands ||= @brands.first
     Car.new(brands)
   end
 end
