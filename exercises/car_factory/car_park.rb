@@ -17,8 +17,16 @@ class CarPark
       @cars << car if (places_left > 0)
     end
   end
-  
+
   def retrieve(number_of_cars)
     @cars.pop(number_of_cars)
+  end
+
+  def brands
+    brands = []
+    @cars.each do |car|
+      brands << car.brand
+    end
+    brands.uniq!
   end
 end
