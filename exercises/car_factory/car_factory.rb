@@ -6,7 +6,7 @@ class CarFactory
 
   def initialize(name, brands: nil)
     brands = [brands].flatten
-    unless brands_supported(brands)
+    if brands_not_supported(brands)
       raise UnsupportedBrandException.new,
             "Brand not supported: '#{brands.map(&:to_s).map(&:capitalize).join(' ')}'"
     end
@@ -49,8 +49,8 @@ class CarFactory
     !@brands.include?(brands) && @brands.size > 1
   end
 
-  def brands_supported(brands)
-    brands.all? { |e| SUPPORTED_BRANDS.include?(e) }
+  def brands_not_supported(brands)
+    brands.all? { |e| !SUPPORTED_BRANDS.include?(e) }
   end
   
   def default_brand(brands)
