@@ -1,3 +1,4 @@
+require 'pry'
 class CarFactory
 
   class UnsupportedBrandException < StandardError; end
@@ -26,9 +27,18 @@ class CarFactory
 
   def make_cars(amount = {})
     cars = []
-    amount.times do
-      cars << Car.new(@brands.first)
-      @brands.rotate!
+    
+    if amount.class == Integer 
+      amount.times do
+        cars << Car.new(@brands.first)
+        @brands.rotate!
+      end
+    else
+      amount.keys.each do |key|
+        amount[key].times do
+          cars << Car.new(key)
+        end
+      end      
     end
     cars
   end
