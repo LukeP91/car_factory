@@ -35,8 +35,10 @@ class CarFactory
       end
     else
       amount.keys.each do |key|
-        amount[key].times do
-          cars << Car.new(key)
+        if @brands.include?(key)
+          amount[key].times do
+            cars << Car.new(key)
+          end
         end
       end      
     end
