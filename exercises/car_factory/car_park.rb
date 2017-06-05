@@ -14,7 +14,7 @@ class CarPark
     cars = [cars]
     cars.flatten!
     cars.each do |car|
-      @cars << car if (places_left > 0)
+      @cars << car if places_left > 0
     end
   end
 
@@ -35,10 +35,10 @@ class CarPark
     @cars.each do |car|
       if brands_stats[car.brand].nil?
         brands_stats[car.brand] = 1
-      else 
+      else
         brands_stats[car.brand] = brands_stats[car.brand]++1
       end
-    end   
-    brands_stats 
+    end
+    brands_stats
   end
 end
