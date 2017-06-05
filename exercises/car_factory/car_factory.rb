@@ -2,11 +2,11 @@ class CarFactory
 
   class UnsupportedBrandException < StandardError; end
 
-  SUPPORTED_BRANDS = %i{Fiat Lancia Ford Subaru}
+  SUPPORTED_BRANDS = %i{fiat lancia ford subaru}
 
   def initialize(name, brands: nil)
     brands = [brands].flatten
-    unless brands.all? { |e| SUPPORTED_BRANDS.include?(e.capitalize) }
+    unless brands.all? { |e| SUPPORTED_BRANDS.include?(e) }
       raise UnsupportedBrandException.new,
             "Brand not supported: '#{brands.map(&:to_s).map(&:capitalize).join(' ')}'"
     end
@@ -24,10 +24,11 @@ class CarFactory
     Car.new(brands)
   end
 
-  def make_cars(amount)
+  def make_cars(amount = {})
     cars = []
     amount.times do
       cars << Car.new(@brands.first)
+      @brands.rotate!
     end
     cars
   end
