@@ -1,4 +1,3 @@
-require 'pry'
 class CarFactory
 
   class UnsupportedBrandException < StandardError; end
@@ -7,7 +6,7 @@ class CarFactory
 
   def initialize(name, brands: nil)
     brands = [brands].flatten
-    unless brands.all? { |e| SUPPORTED_BRANDS.include?(e) }
+    unless brands_supported(brands)
       raise UnsupportedBrandException.new,
             "Brand not supported: '#{brands.map(&:to_s).map(&:capitalize).join(' ')}'"
     end
@@ -17,7 +16,7 @@ class CarFactory
   end
 
   def make_car(brands = nil)
-    if (brands == nil || !@brands.include?(brands) ) && @brands.size > 1 
+    if brand_not_supported(brands) || default_brand(brands)
       raise UnsupportedBrandException.new, 'Factory does not have a brand or do not support it'
     end
 
@@ -29,18 +28,9 @@ class CarFactory
     cars = []
     
     if amount.class == Integer 
-      amount.times do
-        cars << Car.new(@brands.first)
-        @brands.rotate!
-      end
+      cars = make_given_amount_of_cars(amount)
     else
-      amount.keys.each do |key|
-        if @brands.include?(key)
-          amount[key].times do
-            cars << Car.new(key)
-          end
-        end
-      end      
+      cars = make_cars_for_given_hash_config(amount)    
     end
     cars
   end
@@ -53,5 +43,38 @@ class CarFactory
   
   def brands_names_array
     @brands.map(&:to_s).map(&:capitalize)
+  end
+
+  def brand_not_supported(brands)
+    !@brands.include?(brands) && @brands.size > 1
+  end
+
+  def brands_supported(brands)
+    brands.all? { |e| SUPPORTED_BRANDS.include?(e) }
+  end
+  
+  def default_brand(brands)
+    brands == nil && @brands.size > 1
+  end
+
+  def make_cars_for_given_hash_config(amount)
+    cars = []
+    amount.keys.each do |key|
+      if @brands.include?(key)
+        amount[key].times do
+          cars << Car.new(key)
+        end
+      end
+    end
+    cars
+  end
+
+  def make_given_amount_of_cars(amount)
+    cars = []
+    amount.times do
+      cars << Car.new(@brands.first)
+      @brands.rotate!
+    end
+    cars
   end
 end
