@@ -1,7 +1,5 @@
 def dice_roller
-  results = []
-  7.times { results << roll_k(20) }
-  results = select_results(results)
+  results = make_roll
   puts "Your roll is #{results.join(', ')}"
 end
 
@@ -18,6 +16,19 @@ def select_results(results)
   results.slice!(highest_roll_index)
 
   results
+end
+
+def make_roll
+  results = []
+  7.times { results << roll_k(20) }
+  results = select_results(results)
+  return results if results_below_55(results)
+  puts "Roll #{results.join(', ')} is higher than 55. Rerolling..."
+  make_roll
+end
+
+def results_below_55(results)
+  results.sum <= 55
 end
 
 dice_roller
