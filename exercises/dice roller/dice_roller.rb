@@ -22,7 +22,10 @@ def make_roll
   results = []
   7.times { results << roll_k(20) }
   results = select_results(results)
-  return results if results_below_55(results)
+  if results_below_55(results)
+    results << roll_k(20)
+    return results
+  end
   puts "Roll #{results.join(', ')} is higher than 55. Rerolling..."
   make_roll
 end
