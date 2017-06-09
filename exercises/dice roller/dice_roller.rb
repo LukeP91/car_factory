@@ -1,11 +1,34 @@
+require 'pry'
 def dice_roller
   results = make_roll
   puts "Your roll is #{results.join(', ')}"
 end
 
+def make_roll
+  results = []
+  extra_roll_results = additional_roll_result
+  7.times { results << roll_k(20) }
+  results = discard_results(results, extra_roll_results)
+  if results_below_55(results)
+    results << roll_k(20)
+    return results
+  end
+  puts "Roll #{results.join(', ')} is higher than 55. Rerolling..."
+  make_roll
+end
+
 def roll_k(sides)
   dice_roll = Random.new
   dice_roll.rand(1..sides)
+end
+
+def results_below_55(results)
+  results.sum <= 55
+end
+
+def discard_results(results, extra_roll_results)
+  return select_lowest_results(results) if extra_roll_results[:second_roll] == 1
+  select_results(results)
 end
 
 def select_results(results)
@@ -18,20 +41,21 @@ def select_results(results)
   results
 end
 
-def make_roll
-  results = []
-  7.times { results << roll_k(20) }
-  results = select_results(results)
-  if results_below_55(results)
-    results << roll_k(20)
-    return results
-  end
-  puts "Roll #{results.join(', ')} is higher than 55. Rerolling..."
-  make_roll
+def select_lowest_results(results)
+  lowest_roll_index = results.index(results.min)
+  results.slice!(lowest_roll_index)
+
+  second_lowest_roll_index = results.index(results.min)
+  results.slice!(second_lowest_roll_index)
+
+  results
 end
 
-def results_below_55(results)
-  results.sum <= 55
+def additional_roll_result
+  first_roll = roll_k(30)
+  return { first_roll: first_roll, second_roll: 0 } if first_roll > 7
+  second_roll = roll_k(30)
+  { first_roll: first_roll, second_roll: second_roll }
 end
 
 dice_roller
