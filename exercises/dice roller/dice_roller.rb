@@ -6,11 +6,11 @@ end
 
 def make_roll
   results = []
-  extra_roll_results = additional_roll_result
+  additional_roll_result = additional_roll
   7.times { results << roll_k(20) }
-  results = discard_results(results, extra_roll_results)
+  results = discard_results(results, additional_roll_result)
   if results_below_55(results)
-    results << roll_k(20)
+    results << make_extra_roll(additional_roll_result)
     return results
   end
   puts "Roll #{results.join(', ')} is higher than 55. Rerolling..."
@@ -26,8 +26,8 @@ def results_below_55(results)
   results.sum <= 55
 end
 
-def discard_results(results, extra_roll_results)
-  return select_lowest_results(results) if extra_roll_results[:second_roll] == 1
+def discard_results(results, additional_roll_result)
+  return select_lowest_results(results) if additional_roll_result[:second_roll] == 1
   select_results(results)
 end
 
@@ -51,11 +51,16 @@ def select_lowest_results(results)
   results
 end
 
-def additional_roll_result
+def additional_roll
   first_roll = roll_k(30)
   return { first_roll: first_roll, second_roll: 0 } if first_roll > 7
   second_roll = roll_k(30)
   { first_roll: first_roll, second_roll: second_roll }
+end
+
+def make_extra_roll(additional_roll_result)
+  return 25 if additional_roll_result[:second_roll] >= 24
+  roll_k(20)
 end
 
 dice_roller
