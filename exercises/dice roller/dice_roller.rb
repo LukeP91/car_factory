@@ -1,7 +1,9 @@
 require 'pry'
 def dice_roller
   results = make_roll
-  puts "Your roll is #{results.join(', ')}"
+  puts "Your randomly generated set: #{results.join(', ')}. Are you happy?"
+  answer = gets.chop
+  dice_roller if answer != "YES!"
 end
 
 def make_roll
