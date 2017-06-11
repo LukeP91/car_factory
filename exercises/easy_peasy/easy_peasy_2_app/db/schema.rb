@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20170611223156) do
 
   create_table "availabilities", force: :cascade do |t|
     t.integer  "user_id"
-    t.date     "day_off"
+    t.date     "day_off",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_availabilities_on_user_id", using: :btree
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20170611223156) do
 
   create_table "profiles", force: :cascade do |t|
     t.integer  "user_id",      null: false
-    t.string   "phone_number"
+    t.string   "phone_number", null: false
     t.date     "accepted_at"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
