@@ -26,11 +26,11 @@ class CarFactory
 
   def make_cars(amount = {})
     cars = []
-    
-    if amount.class == Integer 
+
+    if amount.is_a?(Integer)
       cars = make_given_amount_of_cars(amount)
     else
-      cars = make_cars_for_given_hash_config(amount)    
+      cars = make_cars_for_given_hash_config(amount)
     end
     cars
   end
@@ -40,7 +40,7 @@ class CarFactory
   end
 
   private
-  
+
   def brands_names_array
     @brands.map(&:to_s).map(&:capitalize)
   end
@@ -52,7 +52,7 @@ class CarFactory
   def brands_supported?(brands)
     (brands - SUPPORTED_BRANDS).empty?
   end
-  
+
   def default_brand?(brands)
     brands == nil && @brands.size > 1
   end
