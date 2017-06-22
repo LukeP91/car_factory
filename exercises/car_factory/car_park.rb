@@ -23,11 +23,7 @@ class CarPark
   end
 
   def brands
-    brands = []
-    @cars.each do |car|
-      brands << car.brand
-    end
-    brands.uniq!
+    @cars.map(&:brand).uniq!
   end
 
   def brands_stats
