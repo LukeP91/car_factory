@@ -16,7 +16,7 @@ class CarFactory
   end
 
   def make_car(brands = nil)
-    if !brand_available?(brands) || default_brand?(brands)
+    if !brand_available?(brands) && !can_use_default_brand?(brands)
       raise UnsupportedBrandException.new, 'Factory does not have a brand or do not support it'
     end
 
@@ -39,15 +39,15 @@ class CarFactory
   end
 
   def brand_available?(brands)
-    @brands.include?(brands) || @brands.size == 1
+    @brands.size > 1 && @brands.include?(brands)
   end
 
   def brands_supported?(brands)
     (brands - SUPPORTED_BRANDS).empty?
   end
 
-  def default_brand?(brands)
-    brands == nil && @brands.size > 1
+  def can_use_default_brand?(brands)
+    @brands.size == 1 && (@brands.include?(brands) || brands.nil?)
   end
 
   def make_cars_for_given_hash_config(amount)
