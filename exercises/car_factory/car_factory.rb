@@ -2,7 +2,7 @@ class CarFactory
 
   class UnsupportedBrandException < StandardError; end
 
-  SUPPORTED_BRANDS = %i{fiat lancia ford subaru}
+  SUPPORTED_BRANDS = %i{fiat lancia ford subaru}.freeze
 
   def initialize(name, brands: nil)
     brands = [brands].flatten
