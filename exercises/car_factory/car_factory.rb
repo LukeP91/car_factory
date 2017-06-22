@@ -25,14 +25,7 @@ class CarFactory
   end
 
   def make_cars(amount = {})
-    cars = []
-
-    if amount.is_a?(Integer)
-      cars = make_given_amount_of_cars(amount)
-    else
-      cars = make_cars_for_given_hash_config(amount)
-    end
-    cars
+    amount.is_a?(Integer) ? make_given_amount_of_cars(amount) : make_cars_for_given_hash_config(amount)
   end
 
   def name
