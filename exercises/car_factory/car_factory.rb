@@ -16,7 +16,7 @@ class CarFactory
   end
 
   def make_car(brands = nil)
-    if !brand_supported?(brands) || default_brand?(brands)
+    if !brand_available?(brands) || default_brand?(brands)
       raise UnsupportedBrandException.new, 'Factory does not have a brand or do not support it'
     end
 
@@ -45,7 +45,7 @@ class CarFactory
     @brands.map(&:to_s).map(&:capitalize)
   end
 
-  def brand_supported?(brands)
+  def brand_available?(brands)
     @brands.include?(brands) || @brands.size == 1
   end
 
