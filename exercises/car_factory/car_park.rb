@@ -10,9 +10,9 @@ class CarPark
     @capacity - @cars.size
   end
 
-  def receive(cars_to_park)
-    [cars_to_park].flatten.each do |car|
-      @cars << car if places_left > 0
+  def receive(cars)
+    [cars].flatten.take(places_left).each do |car|
+      @cars << car
     end
   end
 
