@@ -1,9 +1,11 @@
 class Car
-  AVAILABLE_COLORS = []
+  class << self; attr_accessor :color_index end
+  AVAILABLE_COLORS = [].freeze
+  @color_index = 0
 
   def initialize(brand, color: nil)
     @brand = brand
-    @color = color ? color : get_available_color
+    @color = color ? color : available_color
   end
 
   def color_name
@@ -16,9 +18,10 @@ class Car
 
   private
 
-  def get_available_color
-    color = AVAILABLE_COLORS.first
-    AVAILABLE_COLORS.rotate!
+  def available_color
+    return nil if AVAILABLE_COLORS.empty?
+    color = AVAILABLE_COLORS[Car.color_index]
+    Car.color_index = (Car.color_index + 1) % AVAILABLE_COLORS.length
     color
   end
 end
