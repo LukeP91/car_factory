@@ -63,11 +63,9 @@ class CarFactory
   end
 
   def make_given_amount_of_cars(amount)
-    cars = []
-    amount.times do
-      cars << Car.new(@brands.first)
-      @brands.rotate!
-    end
-    cars
+    # version with map
+    amount.times.collect{ |i| Car.new(@brands[i % @brands.length]) }
+    # version with passing block to an Array.new
+    # Array.new(amount) { |i| Car.new(@brands[i % @brands.length]) }
   end
 end
