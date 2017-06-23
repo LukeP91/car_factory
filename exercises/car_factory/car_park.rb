@@ -25,14 +25,9 @@ class CarPark
   end
 
   def brands_stats
-    brands_stats = {}
-    @cars.each do |car|
-      if brands_stats[car.brand].nil?
-        brands_stats[car.brand] = 1
-      else
-        brands_stats[car.brand] = brands_stats[car.brand]++1
-      end
+    @cars.inject({}) do |stats, car|
+      stats[car.brand] = stats[car.brand] ? stats[car.brand] + 1 : 1
+      stats
     end
-    brands_stats
   end
 end
