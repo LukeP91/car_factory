@@ -5,6 +5,6 @@ class Job < ActiveRecord::Base
 
   def available_users
     job_date_range = start_date..end_date
-    User.with_accepted_profile.where.not(id: User.users_with_day_off(job_date_range))
+    User.available_for_job(job_date_range)
   end
 end

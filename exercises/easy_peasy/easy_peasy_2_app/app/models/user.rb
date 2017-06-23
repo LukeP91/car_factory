@@ -12,6 +12,9 @@ class User < ActiveRecord::Base
   scope :with_day_off_in, ->(date) { joins(:availabilities).
     where(availabilities: { day_off: date } ) }
 
+  scope :available_for_job, ->(job_date_range) { with_accepted_profile.
+    where.not(id: User.users_with_day_off(job_date_range)) }
+
   def self.users_with_day_off(job_date_range)
     User.with_accepted_profile.with_day_off_in(job_date_range).map(&:id)
   end
