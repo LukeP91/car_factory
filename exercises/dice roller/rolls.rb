@@ -1,7 +1,7 @@
 require_relative 'dice_roll'
 
 class Rolls
-  MAX_ROLLS_SUM = 55.freeze
+  MAX_ROLLS_SUM = 55
 
   def initialize
     @k20 = DiceRoll.new(20)
@@ -21,9 +21,9 @@ class Rolls
     @resuilts = []
     make_rolls
   end
-  
+
   private
-  
+
   def discard_results
     return select_lowest_results if @additional_roll_result[:second_roll] == 1
     select_results

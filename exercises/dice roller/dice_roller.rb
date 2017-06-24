@@ -1,4 +1,3 @@
-require 'pry'
 require_relative 'rolls'
 
 def dice_roller

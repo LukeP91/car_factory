@@ -1,3 +1,4 @@
+require 'pry'
 class CarFactory
 
   class UnsupportedBrandException < StandardError; end
@@ -52,13 +53,12 @@ class CarFactory
 
   def make_cars_for_given_hash_config(amount)
     cars = []
-    amount.keys.each do |key|
-      if @brands.include?(key)
-        amount[key].times do
-          cars << Car.new(key)
-        end
+    test = amount.each do |brand, car_amount|
+      if @brands.include?(brand)
+        Array.new(car_amount) { Car.new(brand) }
       end
     end
+    binding.pry
     cars
   end
 
