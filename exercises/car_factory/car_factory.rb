@@ -1,13 +1,12 @@
 require 'pry'
 class CarFactory
-
   class UnsupportedBrandException < StandardError; end
 
-  SUPPORTED_BRANDS = %i{fiat lancia ford subaru}.freeze
+  SUPPORTED_BRANDS = %i(fiat lancia ford subaru).freeze
 
   def initialize(name, brands: nil)
     brands = [brands].flatten
-    if  !brands_supported?(brands)
+    if !brands_supported?(brands)
       raise UnsupportedBrandException.new,
             "Brand not supported: '#{brands.map(&:to_s).map(&:capitalize).join(' ')}'"
     end
@@ -51,15 +50,12 @@ class CarFactory
     @brands.size == 1 && (@brands.include?(brands) || brands.nil?)
   end
 
-  def make_cars_for_given_hash_config(amount)
+  def make_cars_for_given_hash_config(config_hash)
     cars = []
-    test = amount.each do |brand, car_amount|
-      if @brands.include?(brand)
-        Array.new(car_amount) { Car.new(brand) }
-      end
+    config_hash.each do |brand, amount|
+      cars << Array.new(amount) { Car.new(brand) } if @brands.include?(brand)
     end
-    binding.pry
-    cars
+    cars.flatten
   end
 
   def make_given_amount_of_cars(amount)
