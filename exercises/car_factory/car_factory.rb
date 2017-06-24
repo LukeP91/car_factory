@@ -51,11 +51,9 @@ class CarFactory
   end
 
   def make_cars_for_given_hash_config(config_hash)
-    cars = []
-    config_hash.each do |brand, amount|
-      cars << Array.new(amount) { Car.new(brand) } if @brands.include?(brand)
-    end
-    cars.flatten
+    config_hash.collect do |brand, amount|
+      Array.new(amount) { Car.new(brand) } if @brands.include?(brand)
+    end.flatten.compact
   end
 
   def make_given_amount_of_cars(amount)
